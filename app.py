@@ -32,38 +32,49 @@ def get_page(url: str) -> list:
         data.append(dat)
     return data
 
+
 def get_movie(url: str) -> dict:
     req = requests.get(url).content
     soup = BeautifulSoup(req, "html.parser")
-    title = soup.find("h2", class_="entry-title").text.replace("Full Movie Watch Online Free", "")
-    image = soup.find("img", class_="attachment-post-thumbnail size-post-thumbnail wp-post-image")['src']
-    description = soup.find_all("p")[4].text
+    title = soup.find("h2", class_="entry-title").get_text(strip=True)
+    title = title.replace("Full Movie Watch Online Free", "").strip()
+    image = soup.find("img", class_="attachment-post-thumbnail")["src"]
+    paragraphs = soup.find("div", class_="entry-content").find_all("p")
+    description = ""
+    for p in paragraphs:
+        if not p.find("strong"):
+            description = p.get_text(strip=True)
+            break
     torrents = soup.find_all("a", class_="mv_button_css")
     torrent = []
-    other_links = []
     for tor in torrents:
-        link = tor['href']
-        size = tor.find_all("small")[0].text
-        quality = tor.find_all("small")[1].text
-        data = {"magnet": link, "size": size, "quality": quality}
-        torrent.append(data)
-    ps = soup.find_all("p")
-    for p in ps:
-        if p.find("strong"):
-            if "Watch Online –" in p.find("strong").text:
-                typ = p.find("strong").text.split("–")[-1]
-                try:
-                    lin = p.find("a")['href']
-                    data = {"type": typ, "url": lin}
-                    other_links.append(data)
-                except:
-                    pass
-    data = {"status": True, "url": url, "title": title, "description": description, "image": image, "torrent": torrent, "other_links": other_links}
-    return data
+        link = tor.get("href")
+        smalls = tor.find_all("small")
+        size = smalls[0].get_text(strip=True) if len(smalls) > 0 else ""
+        quality = smalls[1].get_text(strip=True) if len(smalls) > 1 else ""
+        torrent.append({"magnet": link, "size": size, "quality": quality})
+    other_links = []
+    for p in paragraphs:
+        strong = p.find("strong")
+        if strong and "Watch Online" in strong.get_text():
+            typ = strong.get_text().split("–")[-1].strip()
+            a = p.find("a")
+            if a and a.get("href"):
+                other_links.append({"type": typ, "url": a["href"]})
+
+    return {
+        "status": True,
+        "url": url,
+        "title": title,
+        "description": description,
+        "image": image,
+        "torrent": torrent,
+        "other_links": other_links
+    }
 
 @app.get("/search")
 async def search(query: str):
-    url = main_url+f"/?s={query}"
+    url = main_url+f"/search_movies?s={query}"
     try:
         data = get_page(url)
         total = len(data)
@@ -124,3 +135,4 @@ async def sse():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app)
+
