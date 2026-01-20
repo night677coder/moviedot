@@ -30,7 +30,7 @@ jobs:
         cd frontend
         npm run build
       env:
-        VITE_API_BASE: https://movierulz-tau.vercel.app
+        VITE_API_BASE: https://movierulz-rm55fxpfo-night677coders-projects.vercel.app
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
@@ -38,3 +38,4 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./frontend/dist
+        destination_dir: .
