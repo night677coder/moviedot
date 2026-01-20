@@ -1,0 +1,87 @@
+{
+  "name": "MovieDot - Watch Movies Online",
+  "short_name": "MovieDot",
+  "description": "Stream the latest Telugu, Hindi, Tamil, Malayalam, and English movies online for free",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["entertainment", "movies", "streaming"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Movies",
+      "short_name": "Search",
+      "description": "Search for your favorite movies",
+      "url": "/search",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Telugu Movies",
+      "short_name": "Telugu",
+      "description": "Browse Telugu movies",
+      "url": "/c/telugu",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Hindi Movies",
+      "short_name": "Hindi",
+      "description": "Browse Hindi movies",
+      "url": "/c/hindi",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "MovieDot home screen showing latest movies"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "MovieDot mobile view"
+    }
+  ]
+}
