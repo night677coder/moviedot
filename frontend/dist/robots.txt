@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://night677coder.github.io/moviedot/sitemap.xml
+
+# Block common non-content paths
+Disallow: /node_modules/
+Disallow: /src/
+Disallow: /*.js$
+Disallow: /*.jsx$
+Disallow: /*.css$
+Disallow: /*.json$
+
+# Allow important content paths
+Allow: /c/
+Allow: /search
+Allow: /movie
+Allow: /watch
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
