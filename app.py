@@ -321,8 +321,4 @@ if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app)
 
-# Vercel serverless handler
-from fastapi import FastAPI
-from mangum import Mangum
-
-handler = Mangum(app)
+# Vercel serverless handler is created in index.py
