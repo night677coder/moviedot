@@ -1,12 +1,20 @@
 from typing import List, Optional, Union
+import sys
+import os
 
-from fastapi import FastAPI, Query, Path
+from fastapi import FastAPI, Query, Path, HTTPException
 from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-import cloudscraper
-from bs4 import BeautifulSoup
-requests = cloudscraper.create_scraper()
+
+try:
+    import cloudscraper
+    from bs4 import BeautifulSoup
+    requests = cloudscraper.create_scraper()
+    SCRAPER_AVAILABLE = True
+except ImportError:
+    import requests
+    SCRAPER_AVAILABLE = False
 
 class MovieListItem(BaseModel):
     title: str = Field(..., example="Example Movie Title")
@@ -48,8 +56,17 @@ class MovieDetailResponse(BaseModel):
 app = FastAPI(
     title="Movierulz API",
     version="1.0.0",
-    description="Unofficial scraping API exposed via FastAPI. See /docs for interactive Swagger UI.",
+    description="Unofficial API for Movierulz website",
 )
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint"""
+    return {
+        "status": "healthy",
+        "scraper_available": SCRAPER_AVAILABLE,
+        "version": "1.0.0"
+    }
 
 app.add_middleware(
     CORSMiddleware,
@@ -226,11 +243,35 @@ async def get_home(
     description="Returns the home page list.",
 )
 async def home():
-    url = main_url+"/"
-    data = get_page(url)
-    total = len(data)
-    main_data = {"status": True, "total_found": total, "url": url, "data": data}
-    return JSONResponse(content=main_data)
+    try:
+        if not SCRAPER_AVAILABLE:
+            return JSONResponse(
+                status_code=503,
+                content={
+                    "status": False,
+                    "msg": "Scraper dependencies not available",
+                    "total_found": 0,
+                    "url": "",
+                    "data": []
+                }
+            )
+        
+        url = main_url+"/"
+        data = get_page(url)
+        total = len(data)
+        main_data = {"status": True, "total_found": total, "url": url, "data": data}
+        return JSONResponse(content=main_data)
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={
+                "status": False,
+                "msg": f"Internal server error: {str(e)}",
+                "total_found": 0,
+                "url": "",
+                "data": []
+            }
+        )
 
 @app.get(
     "/fetch",
