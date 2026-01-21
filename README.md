@@ -1,3 +1,5 @@
+click here to watch movies [moviedot](https://movierulz-silk.vercel.app/)
+
 # MovieDot
 
 MovieDot is a modern and responsive movie discovery website designed to deliver a seamless viewing experience across desktop and mobile devices. The platform allows users to explore movies, watch available content online, and download supported media through a clean and intuitive interface.
