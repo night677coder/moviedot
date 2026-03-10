@@ -41,7 +41,7 @@ export default function Watch() {
         
         // Auto-select first available source
         if (d?.other_links?.length) {
-          const unwantedTypes = ['Uperbox', 'Streamtape', 'Download', 'Droplare', 'Filelions']
+          const unwantedTypes = ['Uperbox', 'Streamtape', 'Download', 'Droplare', 'Filelions', 'easysyncr']
           const filteredLinks = d.other_links.filter(link => 
             !unwantedTypes.some(unwanted => 
               link.type.toLowerCase().includes(unwanted.toLowerCase())
@@ -98,7 +98,7 @@ export default function Watch() {
   const filteredLinks = useMemo(() => {
     if (!data?.other_links) return []
     
-    const unwantedTypes = ['Uperbox', 'Streamtape', 'Download', 'Droplare', 'Filelions']
+    const unwantedTypes = ['Uperbox', 'Streamtape', 'Download', 'Droplare', 'Filelions', 'easysyncr']
     return data.other_links.filter(link => 
       !unwantedTypes.some(unwanted => 
         link.type.toLowerCase().includes(unwanted.toLowerCase())

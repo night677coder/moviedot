@@ -68,7 +68,7 @@ export default function App() {
             title="Watch Latest Movies Online"
             description="Stream the latest Telugu, Hindi, Tamil, Malayalam, and English movies online for free. MovieDot offers unlimited entertainment with high-quality streaming."
             keywords="movies online, watch movies, free streaming, Telugu movies, Hindi movies, Tamil movies, Malayalam movies, English movies"
-            canonicalUrl="https://night677coder.github.io/moviedot/"
+            canonicalUrl="https://movierulz-silk.vercel.app/"
           />
         } />
         <Route path="/search" element={
@@ -76,7 +76,7 @@ export default function App() {
             title="Search Movies"
             description="Search for your favorite movies across Telugu, Hindi, Tamil, Malayalam, and English languages. Find and watch movies instantly."
             keywords="search movies, find movies, movie search, online movie finder"
-            canonicalUrl="https://night677coder.github.io/moviedot/search"
+            canonicalUrl="https://movierulz-silk.vercel.app/search"
           />
         } />
         <Route path="/c/:language" element={
@@ -84,7 +84,7 @@ export default function App() {
             title="Browse Movies by Language"
             description="Browse movies by language - Telugu, Hindi, Tamil, Malayalam, and English. Discover new films and watch them online."
             keywords="browse movies, movies by language, category movies"
-            canonicalUrl="https://night677coder.github.io/moviedot"
+            canonicalUrl="https://movierulz-silk.vercel.app"
           />
         } />
         <Route path="/movie" element={
@@ -92,7 +92,7 @@ export default function App() {
             title="Movie Details"
             description="Get detailed information about movies including cast, plot, ratings, and streaming options."
             keywords="movie details, movie information, cast, plot, ratings"
-            canonicalUrl="https://night677coder.github.io/moviedot/movie"
+            canonicalUrl="https://movierulz-silk.vercel.app/movie"
           />
         } />
         <Route path="/watch" element={
@@ -100,7 +100,7 @@ export default function App() {
             title="Watch Movie Online"
             description="Watch movies online in high quality. Stream your favorite films without any interruptions."
             keywords="watch online, stream movies, online streaming, HD movies"
-            canonicalUrl="https://night677coder.github.io/moviedot/watch"
+            canonicalUrl="https://movierulz-silk.vercel.app/watch"
           />
         } />
       </Routes>

@@ -66,7 +66,7 @@ const SEO = ({ title, description, keywords, imageUrl, canonicalUrl }) => {
     }
 
     // Update URL meta tags
-    const currentUrl = `https://night677coder.github.io/moviedot${location.pathname}`
+const currentUrl = `https://movierulz-silk.vercel.app${location.pathname}`
     updateMetaTag('og:url', currentUrl, 'og:url')
     updateMetaTag('twitter:url', currentUrl, 'twitter:url')
 
@@ -79,7 +79,7 @@ const SEO = ({ title, description, keywords, imageUrl, canonicalUrl }) => {
       "@type": "WebPage",
       "name": title || "MovieDot",
       "description": description || "Stream the latest movies online",
-      "url": `https://night677coder.github.io/moviedot${location.pathname}`
+      "url": `https://movierulz-silk.vercel.app${location.pathname}`
     }
 
     // Remove existing structured data script

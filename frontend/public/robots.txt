@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://night677coder.github.io/moviedot/sitemap.xml
+Sitemap: https://movierulz-silk.vercel.app/sitemap.xml
 
 # Block common non-content paths
 Disallow: /node_modules/

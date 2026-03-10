@@ -319,4 +319,4 @@ async def sse():
 
 # Vercel serverless handler
 from mangum import Mangum
-handler = Mangum(app)
+handler = Mangum(app, router_prefix="/api")

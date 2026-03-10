@@ -39,7 +39,34 @@ export default function Home() {
       </div>
 
       {loading ? <div className="panel">Loading…</div> : null}
-      {!loading && error ? <div className="panel">{error}</div> : null}
+      
+      {!loading && error ? (
+        <div className="panel">
+          <p style={{ color: 'rgba(255,255,255,0.65)', marginBottom: 12 }}>{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="button"
+            style={{ marginTop: 8 }}
+          >
+            Retry
+          </button>
+        </div>
+      ) : null}
+
+      {!loading && !error && (!data?.data || data.data.length === 0) ? (
+        <div className="panel">
+          <p style={{ color: 'rgba(255,255,255,0.65)', textAlign: 'center', padding: '20px 0' }}>
+            No movies found. Please try again later.
+          </p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="button"
+            style={{ display: 'block', margin: '0 auto' }}
+          >
+            Refresh
+          </button>
+        </div>
+      ) : null}
 
       {!loading && data?.data?.length ? (
         <div className="grid">
