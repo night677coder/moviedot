@@ -7,14 +7,9 @@ from fastapi.responses import JSONResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-try:
-    import cloudscraper
-    from bs4 import BeautifulSoup
-    requests = cloudscraper.create_scraper()
-    SCRAPER_AVAILABLE = True
-except ImportError:
-    import requests
-    SCRAPER_AVAILABLE = False
+import requests
+from bs4 import BeautifulSoup
+SCRAPER_AVAILABLE = True
 
 class MovieListItem(BaseModel):
     title: str = Field(..., example="Example Movie Title")
@@ -64,7 +59,6 @@ async def health_check():
     """Health check endpoint"""
     return {
         "status": "healthy",
-        "scraper_available": SCRAPER_AVAILABLE,
         "version": "1.0.0"
     }
 
@@ -85,15 +79,24 @@ def scape_link(url: str) -> str:
     return link
 
 def get_page(url: str) -> list:
-    req = requests.get(url).content
+    print(f"[DEBUG] Scraping URL: {url}")
+    try:
+        req = requests.get(url, timeout=10).content
+    except Exception as e:
+        print(f"[DEBUG] Request failed: {e}")
+        return []
     soup = BeautifulSoup(req, "html.parser")
     divs = soup.find_all("div", class_="cont_display")
+    print(f"[DEBUG] Found {len(divs)} div.cont_display")
+    if len(divs) < 3:
+        print(f"[DEBUG] Sample HTML: {str(soup.body or soup)[:1000]}...")
     data = []
     for i in range(2, len(divs)):
         title = divs[i].find("a")
         img = divs[i].find("img")
         dat = {"title": title['title'], "image": img['src'], "link": title['href']}
         data.append(dat)
+    print(f"[DEBUG] Extracted {len(data)} movies from {len(divs)} divs")
     return data
 
 def get_movie(url: str) -> dict:
@@ -244,18 +247,6 @@ async def get_home(
 )
 async def home():
     try:
-        if not SCRAPER_AVAILABLE:
-            return JSONResponse(
-                status_code=503,
-                content={
-                    "status": False,
-                    "msg": "Scraper dependencies not available",
-                    "total_found": 0,
-                    "url": "",
-                    "data": []
-                }
-            )
-        
         url = main_url+"/"
         data = get_page(url)
         total = len(data)
@@ -319,4 +310,4 @@ async def sse():
 
 # Vercel serverless handler
 from mangum import Mangum
-handler = Mangum(app, router_prefix="/api")
+handler = Mangum(app)

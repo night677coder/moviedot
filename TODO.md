@@ -1,6 +1,21 @@
-# TODO: Fix "Failed to fetch" on GitHub Pages Deployment
+# TODO: Fix Vercel White Screen Deploy
 
-- [x] Update `getApiBase()` in `movierulz/frontend/src/api.js` to use Vercel backend URL in production
-- [ ] Rebuild the frontend using `npm run build` in the frontend directory
-- [ ] Redeploy the built files to GitHub Pages
-- [ ] Test the fix by visiting https://night677coder.github.io/moviedot/
+## 1. ✅ Update requirements.txt (Vercel-compatible deps)
+
+## 2. ✅ Update api/index.py
+- Remove cloudscraper try/except, use requests only
+- BS4 parser='html.parser' (already good)
+
+## 3. Test locally
+- uvicorn api.index:app --reload
+- cd frontend && npm run preview
+- curl localhost:8000/health
+
+## 4. Commit & Deploy
+- git add .
+- git commit -m "Fix Vercel deploy: deps + scraper"
+- git push
+
+## 5. Verify
+- https://movierulz-silk.vercel.app/
+- /api/health
